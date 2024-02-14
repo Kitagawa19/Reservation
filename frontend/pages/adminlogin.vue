@@ -1,0 +1,12 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: false,
+});
+</script>
+
+<template>
+  <div>
+    <SubHeader />
+    <Adminlogin/>
+  </div>
+</template>

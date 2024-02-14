@@ -15,7 +15,7 @@ definePageMeta({
           </div>  
           <div class="card-body">
             <p>こちらは生徒用のアカウントです</p>
-            <NuxtLink to="/studentlogin" class="btn btn-primary mt-3">予約</NuxtLink>
+            <NuxtLink to="/studentlogin" class="btn btn-primary mt-3">生徒用</NuxtLink>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@ definePageMeta({
           </div>  
           <div class="card-body">
             <p>こちらは管理者用のアカウントです</p>
-            <NuxtLink to="/adminlogin" class="btn btn-primary mt-3">予約</NuxtLink>
+            <NuxtLink to="/adminlogin" class="btn btn-primary mt-3">管理者用</NuxtLink>
           </div>
         </div>
       </div>
