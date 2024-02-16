@@ -66,43 +66,28 @@ const register = async () => {
 <template>
   <div class="container-fluid  text-center mt-4 b-4 px-4" style="width: auto; margin: auto;">
     <div class="row gx-5">
-      <div class="col-md-6">
-        <span class="border">
-          <img src="/student.jpg" class="center" style="width: 400px; border: none;" alt="...">
-        </span>
-      </div>
-      <div class="col-md-6">
-        <div class="card mt-4">
-          <div class="card-header">
-            生徒用ログイン
-          </div>  
-          <div class="card-body">
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="userName">
-              <label for="floatingInput">学籍番号</label>
-            </div>
-            <div class="form-floating">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Password" v-model="password">
-              <label for="floatingPassword">Password</label>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3" @click="login">ログイン</button>
-          </div>
+      <div class="col-md-6 ">
+        <div class="header p-3">
+          <h3>会員登録がお済みの方</h3>
         </div>
-        <div class="card mt-4">
-          <div class="card-header">
-            生徒用登録用
-          </div>  
-          <div class="card-body">
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="registerInput" placeholder="" v-model="registeruserName">
-              <label for="registerInput">学籍番号</label>
-            </div>
-            <div class="form-floating">
-              <input type="password" class="form-control" id="registerPassword" placeholder="Password" v-model="registerPassword">
-              <label for="registerPassword">Password</label>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3" @click="register">登録</button>
-          </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="userName">
+          <label for="floatingInput">お名前</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" v-model="password">
+          <label for="floatingPassword">パスワード</label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3" @click="login">ログイン</button>
+      </div>
+      <div class="col-md-1 p-4">
+        <div class="d-flex" style="height: 200px;">
+        <div class="vr d-none d-md-block"></div> <!-- 縦線 -->
+        </div>
+      </div>
+      <div class="col-md-5 p-4">
+        <div class="header">
+          <h3>会員登録がお済みでない方へ</h3>
         </div>
       </div>
     </div>

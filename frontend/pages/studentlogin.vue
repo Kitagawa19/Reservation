@@ -6,5 +6,5 @@ definePageMeta({
 
 <template>
   <SubHeader />
-  <Studentlogin />
+  <Login />
 </template>
