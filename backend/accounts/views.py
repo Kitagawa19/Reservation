@@ -1,17 +1,47 @@
-from django.contrib import admin
-from django.urls import path
-from .views import (
-    StudentRegisterView,
-    SuperUserRegisterView,
-    StudentLoginView,
-    SuperUserLoginView,
-    UserLogoutView,
-)
+from django.shortcuts import render
+from django.contrib.auth import authenticate ,login,logout
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import CustomUser
+# Create your views here.
 
-urlpatterns = [
-    path("student_register/", StudentRegisterView.as_view(), name="student_register"),
-    path("superuser_register/", SuperUserRegisterView.as_view(), name="superuser_register"),
-    path("student_login/", StudentLoginView.as_view(),name="student_login"),
-    path("superuser_login/", SuperUserLoginView.as_view(),name="superuser_login"),
-    path("logout/", UserLogoutView.as_view(),name="logout"),
-]
+class StudentRegisterView(APIView):
+  def post(self,request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    user = CustomUser.objects.create_user(username=username,password=password)
+    return Response("アカウントが作成されました")
+
+class SuperUserRegisterView(APIView):
+  def post(self,request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    user = CustomUser.objects.create_superuser(username=username,password=password)
+    return Response("アカウントが作成されました")
+  
+class StudentLoginView(APIView):
+  def post(self,request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    user = authenticate(username=username,password=password)
+    if user is not None:
+      login(request,user)
+      return Response("ログインしました")
+    else:
+      return Response("ログインできませんでした")
+    
+class SuperUserLoginView(APIView):
+  def post(self,request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    user = authenticate(username=username,password=password)
+    if user is not None:
+      login(request,user)
+      return Response("ログインしました")
+    else:
+      return Response("ログインできませんでした")
+
+class UserLogoutView(APIView):
+  def post(self,request):
+    logout(request)
+    return Response("ログアウトしました")
