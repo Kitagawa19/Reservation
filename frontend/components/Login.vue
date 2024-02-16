@@ -2,6 +2,8 @@
 
 const userName = ref('')
 const password = ref('')
+const showPassword = ref(false)
+const showRegisterPassword = ref(false)
 
 const login = async () => {
   if(userName.value === '' || password.value === '') {
@@ -66,7 +68,7 @@ const register = async () => {
 <template>
   <div class="container-fluid  text-center mt-4 b-4 px-4" style="width: auto; margin: auto;">
     <div class="row gx-5">
-      <div class="col-md-6 ">
+      <div class="col-md-5">
         <div class="header p-3">
           <h3>会員登録がお済みの方</h3>
         </div>
@@ -75,20 +77,37 @@ const register = async () => {
           <label for="floatingInput">お名前</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" v-model="password">
+          <input :type="showPassword ? 'text' : 'password'" class="form-control" id="floatingPassword" placeholder="Password" v-model="password">
           <label for="floatingPassword">パスワード</label>
+          <div>
+            <input type="checkbox" id="showPassword" v-model="showPassword">
+            <label for="showPassword">パスワードを表示</label>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary mt-3" @click="login">ログイン</button>
       </div>
-      <div class="col-md-1 p-4">
-        <div class="d-flex" style="height: 200px;">
+      <div class="col-md-2 p-4">
+        <div class="d-flex vr-blurry" style="height: 200px;">
         <div class="vr d-none d-md-block"></div> <!-- 縦線 -->
         </div>
       </div>
-      <div class="col-md-5 p-4">
-        <div class="header">
-          <h3>会員登録がお済みでない方へ</h3>
+      <div class="col-md-5">
+        <div class="header p-3">
+          <h3>会員登録がお済みでない方</h3>
         </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="registeruserName">
+          <label for="floatingInput">お名前</label>
+        </div>
+        <div class="form-floating">
+          <input :type="showRegisterPassword ? 'text' : 'password'" class="form-control" id="floatingPassword" placeholder="Password" v-model="registerPassword">
+          <label for="floatingPassword">パスワード</label>
+          <div>
+            <input type="checkbox" id="showRegisterPassword" v-model="showRegisterPassword">
+            <label for="showRegisterPassword">パスワードを表示</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3" @click="register">登録</button>
       </div>
     </div>
   </div>
