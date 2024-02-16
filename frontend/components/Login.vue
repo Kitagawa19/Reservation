@@ -88,7 +88,7 @@ const register = async () => {
       </div>
       <div class="col-md-2 p-4">
         <div class="d-flex vr-blurry" style="height: 200px;">
-        <div class="vr d-none d-md-block"></div> <!-- 縦線 -->
+        <div class="vr d-none d-md-block"></div> 
         </div>
       </div>
       <div class="col-md-5">
