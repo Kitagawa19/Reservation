@@ -2,7 +2,7 @@
 </scritpt>
 
 <template>
-  <div class="container-fluid">
-    <p>予約</p>
+  <div>
+    <Calendar />
   </div>
 </template>
