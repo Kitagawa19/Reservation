@@ -12,7 +12,4 @@ export default defineNuxtConfig({
   },
   css: ["bootstrap/dist/css/bootstrap.css"],
   devtools: { enabled: true },
-  plugins:[
-    {src: '/plugins/vue-cal.js',mode: 'client'}
-  ],
 })
