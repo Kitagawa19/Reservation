@@ -5,6 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-  <SubHeader />
   <Login />
 </template>
