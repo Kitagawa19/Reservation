@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import ClassroomSerializer,ClassroomReservationSerializer
+from .serializers import ClassroomSerializer
 from .models import Classroom,ClassroomReservation
 from datetime import datetime,timedelta
 from rest_framework.decorators import api_view,permission_classes
@@ -7,12 +7,13 @@ from django.http import JsonResponse
 from accounts.models import CustomUser
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
 # Create your views here.
 
+#全体の予約状況のリストの作成
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-#全体の予約状況のリストの作成
-def weekly_reservation(requeat,year,month,day):
+def Weekly_reservation(requeat,year,month,day):
   start_date=datetime(year,month,day).date()
   start_week=start_date-timedelta(days=start_date.weekday()+1)
   end_week=start_week+timedelta(days = 7)
@@ -29,11 +30,12 @@ def weekly_reservation(requeat,year,month,day):
         'purpose':reservation.purpose
     })
     return JsonResponse(classroom_reservations)
+
+#予約の作成
 @csrf_exempt
 @permission_classes([IsAuthenticated])
 @api_view(['POST','GET'])
-#予約の作成
-def booking(request):
+def Booking(request):
   if request.method == 'POST':
     username = request.data.get('username')
     user_instance = CustomUser.objects.get(username=username)
@@ -68,3 +70,8 @@ def booking(request):
       return JsonResponse(reservation_list,safe=False)
     else:
       return JsonResponse({'message':'予約がありません'})
+    
+
+class ClassroomViewSet(viewsets.ModelViewSet):
+  model = Classroom
+  ordering = ['name']
