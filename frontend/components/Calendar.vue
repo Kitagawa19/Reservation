@@ -1,11 +1,19 @@
 <template>
-  <div class="calendar-container">
-    <div class="controls">
-      <button @click="prevMonth"><</button>
-      <span>{{ currentYear }}年{{ currentMonth + 1 }}月</span>
-      <button @click="nextMonth">></button>
+  <div class="calendar-container p-3">
+    <div class="controls position-relative d-flex justify-content-center align-items-center">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <button  class="btn btn-outline-primary" @click="prevMonth"><</button>
+        </div>
+        <div class="col-auto">
+        {{ currentYear }}年{{ currentMonth + 1 }}月
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-outline-primary justify-content-md-end" @click="nextMonth">></button>
+        </div>
+      </div>
     </div>
-    <table class="calendar">
+    <table class="calendar my-4">
       <thead>
         <tr>
           <th v-for="day in ['日', '月', '火', '水', '木', '金', '土']" :key="day">{{ day }}</th>
@@ -28,10 +36,13 @@ export default {
     return {
       currentYear: new Date().getFullYear(),
       currentMonth: new Date().getMonth(),
+      currentDate: new Date().getDate(),
       weeks: [],
     };
   },
   created() {
+    this.currentYear = new Date().getFullYear();
+    this.currentMonth = new Date().getMonth();
     this.generateCalendar();
   },
   methods: {
@@ -100,5 +111,9 @@ export default {
 
 .is-other-month {
   background-color: #f9f9f9;
+}
+
+.is-today {
+  background-color: #ff0;
 }
 </style>
