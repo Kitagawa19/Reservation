@@ -21,7 +21,8 @@
       </thead>
       <tbody>
         <tr v-for="(week, index) in weeks" :key="index">
-          <td v-for="day in week" :key="day" :class="{ 'is-other-month': day && day.getMonth() !== currentMonth }">
+          <td v-for="day in week" :key="day" 
+          :class="{ 'is-other-month': day && day.getMonth() !== currentMonth }" @click="selectDate(day)">
           {{ day ? day.getDate() : '' }}
           </td>
         </tr>
@@ -46,6 +47,14 @@ export default {
     this.generateCalendar();
   },
   methods: {
+    selectDate(day) {
+      if (day) {
+        const date = day.toISOString().split('T')[0];  // YYYY-MM-DD形式に変換
+        this.$router.push({ name: 'booking', params: { date }});
+      }
+    },
+
+
     generateCalendar() {
       const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
       const firstDayOfWeek = new Date(this.currentYear, this.currentMonth, 1).getDay();

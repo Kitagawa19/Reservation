@@ -48,7 +48,7 @@ const logout = async () => {
           <a class="nav-link active" aria-current="page" href="/homepage">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/reservation">予約</a>
+          <a class="nav-link" href="/calendar">予約</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" @click="logout">ログアウト</a>
