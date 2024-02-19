@@ -21,4 +21,18 @@ class ClassroomReservation(models.Model):
     
     def cleen(self):
       if self.start_time >= self.end_time:
-        raise ValidationError('開始時間が終了時間よりも後です。')
+        raise ValidationError('開始時間は終了時間よりも後になっています。')
+      
+      overlapping_reservations = ClassroomReservation.objects.filter(
+        classroom_name=self.classroom_name,
+        date=self.date,
+        start_time__lt=self.end_time,
+        end_time__gt=self.start_time
+      ).exclude(usrt=self.user)
+
+      if overlapping_reservations.exists():
+        raise ValidationError('この時間帯はすでに予約されています。')
+    
+    def save(self,*args,**kwargs):
+      self.full_clean()
+      super().save(*args,**kwargs)
