@@ -14,3 +14,5 @@ export default defineNuxtConfig({
   devtools: { enabled: true }
 })
 を追加しないと動かなかったです
+# 次の作業
+間違えてtsでscriptを書いていなかったので書き直し

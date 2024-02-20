@@ -1,6 +1,10 @@
+<script setup lang="ts">
+</script>
+
 <template>
   <div class="container-fluid p-3">
     <h1>{{ date }}</h1>
+    <Calendar @update-date="updateDate" />
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -16,10 +20,3 @@
     </table>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'booking',
-  props: ['date'],
-};
-</script>

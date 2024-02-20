@@ -20,85 +20,76 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(week, index) in weeks" :key="index">
-          <td v-for="day in week" :key="day" 
-          :class="{ 'is-other-month': day && day.getMonth() !== currentMonth }" @click="selectDate(day)">
-          {{ day ? day.getDate() : '' }}
-          </td>
-        </tr>
-      </tbody>
+      <td>
+        <tr v-for="day in day">
+      {{  day.getDate() }}
+      </tr>
+      </td>
+</tbody>
     </table>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      currentYear: new Date().getFullYear(),
-      currentMonth: new Date().getMonth(),
-      currentDate: new Date().getDate(),
-      weeks: [],
-    };
-  },
-  created() {
-    this.currentYear = new Date().getFullYear();
-    this.currentMonth = new Date().getMonth();
-    this.generateCalendar();
-  },
-  methods: {
-    selectDate(day) {
-      if (day) {
-        const date = day.toISOString().split('T')[0];  // YYYY-MM-DD形式に変換
-        this.$router.push({ name: 'booking', params: { date }});
-      }
-    },
+<script setup lang="ts">
+import { ref, onMounted, defineEmits } from 'vue'
 
+let currentYear = ref(new Date().getFullYear())
+let currentMonth = ref(new Date().getMonth())
+let weeks = ref<(Date | null)[]>([])
 
-    generateCalendar() {
-      const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-      const firstDayOfWeek = new Date(this.currentYear, this.currentMonth, 1).getDay();
+const emit = defineEmits(['update-date'])
 
-      let days = [];
-      // 先月の日付をスキップするための空のセルを追加
-      for (let i = 0; i < firstDayOfWeek; i++) {
-        days.push(null); // 空のセルを追加
-      }
+const selectDate = (day: Date) => {
+  if (day) {
+    const date = day.toISOString().split('T')[0]  // YYYY-MM-DD形式に変換
+    emit('update-date', date)
+  }
+}
 
-      // 当月の日付を追加
-      for (let day = 1; day <= daysInMonth; day++) {
-        days.push(new Date(this.currentYear, this.currentMonth, day));
-      }
+const generateCalendar = () => {
+  const daysInMonth = new Date(currentYear.value, currentMonth.value + 1, 0).getDate()
+  const firstDayOfWeek = new Date(currentYear.value, currentMonth.value, 1).getDay()
 
-      // 次月の日付をスキップするために、週の終わりまで空のセルを追加
-      while (days.length % 7 !== 0) {
-        days.push(null); // 空のセルを追加
-      }
+  let days = []
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    days.push(null)
+  }
 
-      // 週ごとに分割
-      this.weeks = [];
-      for (let i = 0; i < days.length; i += 7) {
-        this.weeks.push(days.slice(i, i + 7));
-      }
-    },
-    prevMonth() {
-      this.currentMonth--;
-      if (this.currentMonth < 0) {
-        this.currentMonth = 11;
-        this.currentYear--;
-      }
-      this.generateCalendar();
-    },
-    nextMonth() {
-      this.currentMonth++;
-      if (this.currentMonth > 11) {
-        this.currentMonth = 0;
-        this.currentYear++;
-      }
-      this.generateCalendar();
-    },
-  },
-};
+  for (let day = 1; day <= daysInMonth; day++) {
+    days.push(new Date(currentYear.value, currentMonth.value, day))
+  }
+
+  while (days.length % 7 !== 0) {
+    days.push(null)
+  }
+
+  weeks.value = []
+  for (let i = 0; i < days.length; i += 7) {
+    weeks.value.push(days.slice(i, i + 7))
+  }
+}
+
+const prevMonth = () => {
+  currentMonth.value--
+  if (currentMonth.value < 0) {
+    currentMonth.value = 11
+    currentYear.value--
+  }
+  generateCalendar()
+}
+
+const nextMonth = () => {
+  currentMonth.value++
+  if (currentMonth.value > 11) {
+    currentMonth.value = 0
+    currentYear.value++
+  }
+  generateCalendar()
+}
+
+onMounted(() => {
+  generateCalendar()
+})
 </script>
 
 <style>
