@@ -16,80 +16,80 @@
     <table class="calendar my-4">
       <thead>
         <tr>
-          <th v-for="day in ['日', '月', '火', '水', '木', '金', '土']" :key="day">{{ day }}</th>
+          <th v-for="day in weekDays" :key="day">{{ day }}</th>
         </tr>
       </thead>
       <tbody>
-      <td>
-        <tr v-for="day in day">
-      {{  day.getDate() }}
-      </tr>
-      </td>
-</tbody>
+        <tr v-for="(week, index) in weeks" :key="index">
+          <td v-for="day in week" :key="day" :class="{ 'is-other-month': day.getMonth() !== currentMonth }">
+            {{ day ? day.getDate() : '' }}
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted, defineEmits } from 'vue'
+<<script setup lang="ts">
+import { ref, onMounted } from 'vue';
 
-let currentYear = ref(new Date().getFullYear())
-let currentMonth = ref(new Date().getMonth())
-let weeks = ref<(Date | null)[]>([])
+const currentYear = ref(new Date().getFullYear());
+const currentMonth = ref(new Date().getMonth());
+const weeks = ref([]);
 
-const emit = defineEmits(['update-date'])
+const weekDays = ['日', '月', '火', '水', '木', '金', '土'];
 
-const selectDate = (day: Date) => {
-  if (day) {
-    const date = day.toISOString().split('T')[0]  // YYYY-MM-DD形式に変換
-    emit('update-date', date)
-  }
-}
+function generateCalendar() {
+  const daysInMonth = new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
+  const firstDayOfWeek = new Date(currentYear.value, currentMonth.value, 1).getDay();
 
-const generateCalendar = () => {
-  const daysInMonth = new Date(currentYear.value, currentMonth.value + 1, 0).getDate()
-  const firstDayOfWeek = new Date(currentYear.value, currentMonth.value, 1).getDay()
+  let days: (Date | null)[] = [];
+  let day = 1 - firstDayOfWeek;
 
-  let days = []
-  for (let i = 0; i < firstDayOfWeek; i++) {
-    days.push(null)
+  // 前月の日付を埋める
+  while (day <= 0) {
+    days.push(new Date(currentYear.value, currentMonth.value, day++));
   }
 
-  for (let day = 1; day <= daysInMonth; day++) {
-    days.push(new Date(currentYear.value, currentMonth.value, day))
+  // 当月の日付を追加
+  for (day = 1; day <= daysInMonth; day++) {
+    days.push(new Date(currentYear.value, currentMonth.value, day));
   }
 
+  // 次月の日付を追加して週の長さを7にする
+  day = 1;
   while (days.length % 7 !== 0) {
-    days.push(null)
+    days.push(new Date(currentYear.value, currentMonth.value + 1, day++));
   }
 
-  weeks.value = []
+  // 週ごとに分割
+  weeks.value = [];
   for (let i = 0; i < days.length; i += 7) {
-    weeks.value.push(days.slice(i, i + 7))
+    weeks.value.push(days.slice(i, i + 7));
   }
 }
 
-const prevMonth = () => {
-  currentMonth.value--
+function prevMonth() {
+  currentMonth.value--;
   if (currentMonth.value < 0) {
-    currentMonth.value = 11
-    currentYear.value--
+    currentMonth.value = 11;
+    currentYear.value--;
   }
-  generateCalendar()
+  generateCalendar();
 }
 
-const nextMonth = () => {
-  currentMonth.value++
+function nextMonth() {
+  currentMonth.value++;
   if (currentMonth.value > 11) {
-    currentMonth.value = 0
-    currentYear.value++
+    currentMonth.value = 0;
+    currentYear.value++;
   }
-  generateCalendar()
+  generateCalendar();
 }
 
 onMounted(() => {
-  generateCalendar()
-})
+  generateCalendar();
+});
 </script>
 
 <style>
