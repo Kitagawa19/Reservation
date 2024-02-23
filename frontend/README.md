@@ -16,3 +16,4 @@ export default defineNuxtConfig({
 を追加しないと動かなかったです
 # 次の作業
 間違えてtsでscriptを書いていなかったので書き直し
+カレンダーの日付を押したら予約ページに
