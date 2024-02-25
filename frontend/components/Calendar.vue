@@ -21,7 +21,10 @@
       </thead>
       <tbody>
         <tr v-for="(week, index) in weeks" :key="index">
-          <td v-for="day in week" :key="day" :class="{ 'is-other-month': day.getMonth() !== currentMonth }">
+          <td v-for="day in week" :key="day" 
+              :class="{ 'is-other-month': day.getMonth() !== currentMonth }"
+              @click="navigateToWeekSchedule(day)"
+              >
             {{ day ? day.getDate() : '' }}
           </td>
         </tr>
@@ -30,8 +33,7 @@
   </div>
 </template>
 
-<<script setup lang="ts">
-import { ref, onMounted } from 'vue';
+<script setup lang="ts">
 
 const currentYear = ref(new Date().getFullYear());
 const currentMonth = ref(new Date().getMonth());
@@ -90,6 +92,14 @@ function nextMonth() {
 onMounted(() => {
   generateCalendar();
 });
+
+
+function navigateToWeekSchedule(day) {
+  if (!day) return; // 空のセルをクリックした場合は何もしない
+  const dateStr = `${day.getFullYear()}-${day.getMonth() + 1}-${day.getDate()}`;
+  navigateTo(`/week/${dateStr}`);
+}
+
 </script>
 
 <style>
@@ -107,6 +117,7 @@ onMounted(() => {
   border: 1px solid #ccc;
   text-align: center;
   padding: 8px;
+  height: 60px;
 }
 
 .is-other-month {

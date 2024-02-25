@@ -23,6 +23,7 @@ const login = async () => {
       });
       if (res.ok) {
         alert('ログインに成功しました');
+        localStorage.setItem('username',userName.value);
         navigateTo('/homepage');
       } else {
         alert('ログインに失敗しました');
