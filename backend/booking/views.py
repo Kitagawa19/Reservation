@@ -47,7 +47,8 @@ def Booking(request):
     ClassroomReservation.objects.create(
       user=user_instance,
       classroom_name=Classroom_name,
-      date=Date,start_time=Staet_time,
+      date=Date,
+      start_time=Staet_time,
       end_time=End_time,
       purpose=Purpose)
     return JsonResponse({'message':'予約が完了しました'})

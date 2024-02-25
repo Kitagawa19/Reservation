@@ -1,35 +1,35 @@
 <template>
-  <div class="calendar-container p-3">
-    <div class="controls position-relative d-flex justify-content-center align-items-center">
-      <div class="row align-items-center">
-        <div class="col-auto">
-          <button  class="btn btn-outline-primary" @click="prevMonth"><</button>
-        </div>
-        <div class="col-auto">
-        {{ currentYear }}年{{ currentMonth + 1 }}月
-        </div>
-        <div class="col-auto">
-          <button class="btn btn-outline-primary justify-content-md-end" @click="nextMonth">></button>
+  <div class="backgroundSetting">
+    <div class="calendar-container p-3">
+      <div class="controls position-relative d-flex justify-content-center align-items-center">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <button class="btn btn-outline-primary" @click="prevMonth"><</button>
+          </div>
+          <div class="col-auto">
+            {{ currentYear }}年{{ currentMonth + 1 }}月
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-primary justify-content-md-end" @click="nextMonth">></button>
+          </div>
         </div>
       </div>
+      <table class="calendar my-4">
+        <thead>
+          <tr>
+            <th v-for="day in weekDays" :key="day">{{ day }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(week, index) in weeks" :key="index">
+            <td v-for="day in week" :key="day" :class="{ 'is-other-month': day.getMonth() !== currentMonth }"
+              @click="navigateToWeekSchedule(day)">
+              {{ day ? day.getDate() : '' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <table class="calendar my-4">
-      <thead>
-        <tr>
-          <th v-for="day in weekDays" :key="day">{{ day }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(week, index) in weeks" :key="index">
-          <td v-for="day in week" :key="day" 
-              :class="{ 'is-other-month': day.getMonth() !== currentMonth }"
-              @click="navigateToWeekSchedule(day)"
-              >
-            {{ day ? day.getDate() : '' }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 
@@ -111,9 +111,11 @@ function navigateToWeekSchedule(day) {
 .calendar {
   width: 100%;
   border-collapse: collapse;
+  background-color: #e0ffff;
 }
 
-.calendar th, .calendar td {
+.calendar th,
+.calendar td {
   border: 1px solid #ccc;
   text-align: center;
   padding: 8px;
@@ -126,5 +128,8 @@ function navigateToWeekSchedule(day) {
 
 .is-today {
   background-color: #ff0;
+}
+.is-other-month {
+  visibility: hidden;
 }
 </style>
