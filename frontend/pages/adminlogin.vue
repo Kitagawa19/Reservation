@@ -6,7 +6,6 @@ definePageMeta({
 
 <template>
   <div>
-    <SubHeader />
     <Adminlogin/>
   </div>
 </template>

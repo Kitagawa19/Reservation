@@ -25,6 +25,7 @@ const logout = async () => {
     });
     if (res.ok) {
       alert('ログアウトしました');
+      localStorage.removeItem('username');
       navigateTo('/');
     } else {
       alert('ログアウトに失敗しました');
