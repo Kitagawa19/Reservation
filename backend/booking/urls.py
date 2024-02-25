@@ -9,5 +9,5 @@ from .views import (
 urlpatterns = [
     path("weekly_reservation/",Weekly_reservation,name='予約一覧'),
     path('Booking/' ,Booking,name='予約表'),
-    path('Classroom', ClassroomViewSet.as_view({'get': 'list'}), name='教室番号'),
+    path('Classroom/', ClassroomViewSet.as_view({'get': 'list'}), name='教室番号'),
 ]

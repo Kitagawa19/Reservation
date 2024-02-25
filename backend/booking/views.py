@@ -51,6 +51,7 @@ def Booking(request):
       end_time=End_time,
       purpose=Purpose)
     return JsonResponse({'message':'予約が完了しました'})
+
 #予約のマイリストの取得
   elif request.method == 'GET':
     my_reservation = ClassroomReservation.objects.all(filter(user=request.user))
@@ -70,8 +71,7 @@ def Booking(request):
       return JsonResponse(reservation_list,safe=False)
     else:
       return JsonResponse({'message':'予約がありません'})
-    
 
 class ClassroomViewSet(viewsets.ModelViewSet):
-  model = Classroom
-  ordering = ['name']
+  queryset = Classroom.objects.all()
+  serializer_class = ClassroomSerializer
