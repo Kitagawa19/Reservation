@@ -1,4 +1,6 @@
 # Reservation
+Nuxt3＋Djago＋Bootstrap5
+
 # GitHubにフォルダごと上げるときの注意点
 片方のフォルダがサブモジュールとして扱われることがあります  
 それの解決方法として
