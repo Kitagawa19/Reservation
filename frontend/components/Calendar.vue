@@ -22,7 +22,10 @@
         </thead>
         <tbody>
           <tr v-for="(week, index) in weeks" :key="index">
-            <td v-for="day in week" :key="day" :class="{ 'is-other-month': day.getMonth() !== currentMonth }"
+            <td v-for="day in week" :key="day" 
+            :class="{
+              'is-other-month': day.getMonth() !== currentMonth,
+              'is-today': isToday(day)}"
               @click="navigateToWeekSchedule(day)">
               {{ day ? day.getDate() : '' }}
             </td>
@@ -34,6 +37,8 @@
 </template>
 
 <script setup lang="ts">
+import { toDisplayString } from 'vue';
+
 
 const currentYear = ref(new Date().getFullYear());
 const currentMonth = ref(new Date().getMonth());
@@ -100,6 +105,12 @@ function navigateToWeekSchedule(day) {
   navigateTo(`/week/${dateStr}`);
 }
 
+function isToday(day) {
+  const today = new Date();
+  return day.getDate() === today.getDate() &&
+    day.getMonth() === today.getMonth() &&
+    day.getFullYear() === today.getFullYear();}
+
 </script>
 
 <style>
@@ -124,12 +135,10 @@ function navigateToWeekSchedule(day) {
 
 .is-other-month {
   background-color: #f9f9f9;
+  visibility: hidden;
 }
 
 .is-today {
   background-color: #ff0;
-}
-.is-other-month {
-  visibility: hidden;
 }
 </style>
