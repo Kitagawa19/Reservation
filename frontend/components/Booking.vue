@@ -128,6 +128,6 @@ const apply = async () => {
   border: 1px solid #e0e0e0;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #e0ffff;
+  background-color: #fff;
 }
 </style>

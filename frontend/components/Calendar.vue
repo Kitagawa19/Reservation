@@ -122,7 +122,7 @@ function isToday(day) {
 .calendar {
   width: 100%;
   border-collapse: collapse;
-  background-color: #e0ffff;
+  background-color: #f9f9f9;
 }
 
 .calendar th,
