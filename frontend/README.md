@@ -17,3 +17,4 @@ export default defineNuxtConfig({
 # 次の作業
 自分のした予約の表示
 空き日や予約されている日の一覧の表示
+UIを一番意識して作ってみる
